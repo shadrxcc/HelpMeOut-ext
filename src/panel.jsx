@@ -6,23 +6,12 @@ import camera from "./assets/camera.svg";
 import trash from "./assets/delete.svg";
 
 const Panel = () => {
-
-    const [cameraEnabled, setCameraEnabled] = useState(true);
-
-    const handleCameraToggle = () => {
-      setCameraEnabled((prevCameraEnabled) => !prevCameraEnabled);
-  
-      // Send a message to content.js to control the camera state
-      chrome.runtime.sendMessage({ enableCamera: !cameraEnabled });
-    };
   return (
     <div style={{display: 'flex', alignItems: 'center'}}>
       <label>
         Camera
         <input
           type="checkbox"
-          checked={cameraEnabled}
-          onChange={handleCameraToggle}
         />
       </label>
 

@@ -21,5 +21,37 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     for (let index = 0; index < binaryData.length; index++) {
       view[index] = binaryData.charCodeAt(index);
     }
+
+    sendArrayBuffer(buffer);
+
   }
 });
+
+function sendArrayBuffer(buffer) {
+  const backendUrl = "https://helpmeout-e2c4.onrender.com/file/upload";
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/octet-stream",
+    },
+    body: buffer,
+  };
+  fetch(backendUrl, requestOptions)
+    .then((response) => {
+      if (!response.ok) {
+        console.log(response);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
+
+
+
+

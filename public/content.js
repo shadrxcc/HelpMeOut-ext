@@ -1,7 +1,7 @@
-
 console.log("i don enter");
 
 var recorder = null;
+var chunks = [];
 function onAccessApproved(stream) {
   recorder = new MediaRecorder(stream);
 
@@ -17,21 +17,23 @@ function onAccessApproved(stream) {
 
   recorder.ondataavailable = function (event) {
     let recordedBlob = event.data;
-    console.log(recordedBlob)
+    console.log(recordedBlob);
+    chunks.push(event.data);
+    console.log(chunks);
 
     const reader = new FileReader();
 
     reader.onload = function () {
-        const base64 = reader.result;
-        console.log('Base 64 encoded video:', base64)
+      const base64 = reader.result;
+      console.log("Base 64 encoded video:", base64);
 
-        chrome.runtime.sendMessage({
-            message: 'recordedblob',
-            blob: base64
-        })
-    }
+      chrome.runtime.sendMessage({
+        message: "recordedblob",
+        blob: base64,
+      });
+    };
 
-    reader.readAsDataURL(recordedBlob)
+    reader.readAsDataURL(recordedBlob);
   };
 }
 
