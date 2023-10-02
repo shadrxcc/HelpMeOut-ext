@@ -10,7 +10,7 @@ import microphone from "./assets/microphone.svg";
 import { useState } from "react";
 import { Switch } from "@chakra-ui/react";
 import { StartRecording } from "./startrecording";
-import { stopRecording } from "./stoprecording";
+// import { stopRecording } from "./stoprecording";
 
 const Popup = () => {
   const [fullscreen, setFullScreen] = useState(true);
@@ -18,6 +18,8 @@ const Popup = () => {
   const handleFullScreen = () => {
     setFullScreen(true);
   };
+
+  
 
   const handleCurrentPreference = () => {
     setFullScreen(false);
@@ -116,7 +118,7 @@ const Popup = () => {
         </div>
 
         <button onClick={StartRecording} id="record">Start Recording</button>
-        <button onClick={stopRecording} id="record">Stop Recording</button>
+        {/* <button onClick={stopRecording} id="record">Stop Recording</button> */}
       </div>
     </div>
   );
