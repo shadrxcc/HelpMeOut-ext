@@ -159,6 +159,35 @@ function onAccessApproved(stream) {
     }
   });
 
+  let isMicOn = true;
+
+  micItem.addEventListener("click", () => {
+    if (!recorder) return console.log("No recorder");
+
+    if (isMicOn) {
+      recorder.stream.getAudioTracks().forEach((track) => {
+        track.enabled = false;
+      });
+      isMicOn = false;
+      micLabel.textContent = "Mic Off";
+    } else {
+      recorder.stream.getAudioTracks().forEach((track) => {
+        track.enabled = true;
+      });
+      isMicOn = true;
+      micLabel.textContent = "Mic On";
+    }
+  });
+
+  deleteItem.addEventListener("click", () => {
+    if (!recorder) return console.log("No recorder");
+    recorder.stop();
+    recorder = null;
+    chunks = [];
+    timeP.textContent = "00:00:00";
+    console.log("Recording deleted");
+  });
+
   recorder.ondataavailable = function (event) {
     let recordedBlob = event.data;
     console.log(recordedBlob);
