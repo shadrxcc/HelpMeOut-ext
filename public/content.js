@@ -59,8 +59,34 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "stopvideo") {
     console.log("stopping video");
     sendResponse(`processed: ${message.action}`);
-    if (!recorder) return console.log("no recorder");
 
+    if (!recorder) return console.log("no recorder");
+    sendArrayBuffer();
     recorder.stop();
   }
 });
+//https://helpmeout-e2c4.onrender.com/
+
+function sendArrayBuffer() {
+  const backendUrl = "https://helpmeout-e2c4.onrender.com/file/save";
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/octet-stream",
+    },
+    body: {}
+  };
+  fetch(backendUrl, requestOptions)
+    .then((response) => {
+      if (!response.ok) {
+        console.log(response);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
