@@ -48,7 +48,10 @@ function onAccessApproved(stream) {
   timeP.style.color = "#fff";
   timeP.textContent = "00:03:35";
   timeSpan.src = "https://www.linkpicture.com/q/recording.svg";
-  timeSpan.className = "record-active"
+  timeSpan.className = "record-active";
+  timeSpan.style.width = "20px"; // Adjust the width as needed
+  timeSpan.style.height = "20px"; // Adjust the height as needed
+
   time.appendChild(timeP);
   time.appendChild(timeSpan);
   controlsContainer.appendChild(time);
