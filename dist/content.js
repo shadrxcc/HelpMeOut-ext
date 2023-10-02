@@ -15,10 +15,18 @@ function onAccessApproved(stream) {
     });
   };
 
+  const panelContainer = document.createElement("div");
+  panelContainer.style.display = "flex";
+  panelContainer.style.alignItems = "center";
+  panelContainer.style.columnGap = "40px";
+
+  const displayImage = document.createElement("img");
+  displayImage.src = "https://www.linkpicture.com/q/user-1.svg";
+
   let controlsContainer = document.createElement("div");
   controlsContainer.style.display = "flex";
   controlsContainer.style.padding = "12px 20px";
-  controlsContainer.style.fontFamily = "Work Sans"
+
   controlsContainer.style.columnGap = "24px";
   controlsContainer.style.borderRadius = "200px";
   controlsContainer.style.background = "#141414";
@@ -36,7 +44,7 @@ function onAccessApproved(stream) {
   time.style.borderRight = "1px solid grey";
   time.style.display = "flex";
   time.style.alignItems = "center";
-  time.style.columnGap = "12px"
+  time.style.columnGap = "12px";
   timeP.style.color = "#fff";
   timeP.textContent = "00:03:35";
   timeSpan.src = "https://www.linkpicture.com/q/recording.svg";
@@ -47,10 +55,10 @@ function onAccessApproved(stream) {
   controlItemsContainer.style.display = "flex";
   controlItemsContainer.style.alignItems = "start";
   controlItemsContainer.style.columnGap = "24px";
-  controlItemsContainer.style.fontSize = "12px"
-  controlItemsContainer.style.fontWeight = "500"
+  controlItemsContainer.style.fontSize = "12px";
+  controlItemsContainer.style.fontWeight = "500";
 
-  document.body.appendChild(controlsContainer);
+  document.body.appendChild(panelContainer);
   const pauseItem = document.createElement("div");
   pauseItem.style.display = "flex";
   pauseItem.style.alignItems = "center";
@@ -63,7 +71,7 @@ function onAccessApproved(stream) {
   const pauseLabel = document.createElement("small");
 
   pauseLabel.textContent = "Pause";
-  pauseLabel.style.fontFamily = "Work Sans"
+
   pauseItem.appendChild(pauseLabel);
 
   const stopItem = document.createElement("div");
@@ -78,7 +86,7 @@ function onAccessApproved(stream) {
   const stopLabel = document.createElement("small");
 
   stopLabel.textContent = "Stop";
-  stopLabel.style.fontFamily = "Work Sans"
+
   stopItem.appendChild(stopLabel);
   const cameraItem = document.createElement("div");
   cameraItem.style.display = "flex";
@@ -92,7 +100,7 @@ function onAccessApproved(stream) {
   const cameraLabel = document.createElement("small");
 
   cameraLabel.textContent = "Camera";
-  cameraLabel.style.fontFamily = "Work Sans"
+
   cameraItem.appendChild(cameraLabel);
 
   const micItem = document.createElement("div");
@@ -106,7 +114,7 @@ function onAccessApproved(stream) {
   micItem.appendChild(micImg);
   const micLabel = document.createElement("small");
   micLabel.textContent = "Mic";
-  micLabel.style.fontFamily = "Work Sans"
+  micLabel.style.fontFamily = "Work Sans";
   micItem.appendChild(micLabel);
 
   const deleteItem = document.createElement("div");
@@ -121,15 +129,34 @@ function onAccessApproved(stream) {
   controlItemsContainer.appendChild(deleteItem);
   controlsContainer.appendChild(controlItemsContainer);
 
+  panelContainer.appendChild(displayImage);
+  panelContainer.appendChild(controlsContainer);
+
   stopItem.addEventListener("click", () => {
     if (!recorder) return console.log("No recorder");
-    controlsContainer.style.display = "none"
+    controlsContainer.style.display = "none";
     recorder.stop();
     // let a = document.createElement("a");
     // a.href = "http://localhost:5173/";
     // document.body.appendChild(a);
     // a.click();
     // document.body.removeChild(a);
+  });
+
+  let isPaused = false;
+
+  pauseItem.addEventListener("click", () => {
+    if (!recorder) return console.log("No recorder");
+
+    if (!isPaused) {
+      recorder.pause();
+      isPaused = true;
+      pauseLabel.textContent = "Resume";
+    } else {
+      recorder.resume();
+      isPaused = false;
+      pauseLabel.textContent = "Pause";
+    }
   });
 
   recorder.ondataavailable = function (event) {
